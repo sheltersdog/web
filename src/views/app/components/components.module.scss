@@ -1,0 +1,435 @@
+@import "../constants/colorConstants.scss";
+@import "../constants/fontConstants.scss";
+@import "../constants/mediaConstants.scss";
+
+.navigation {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+
+  display: flex;
+  z-index: 1001;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+  text-align: center;
+
+  background-color: $white;
+  box-shadow: 0px 6px 4px -7px $whiteGrey;
+
+  .search {
+    cursor: pointer;
+
+    width: 24px;
+    height: 24px;
+  }
+
+  .topNavigationWord {
+    cursor: pointer;
+  }
+}
+
+.navigationSearchBar {
+  position: fixed;
+  top: 0;
+  z-index: 1001;
+
+  background-color: $white;
+  padding: 16px;
+  width: 100vw;
+}
+
+.topNavigationSizedBox {
+  margin-top: 166px;
+
+  @include tabletVertical {
+    margin-top: 80px;
+  }
+
+  @include tablet {
+    margin-top: 80px;
+  }
+
+  @include mobile {
+    margin-top: 80px;
+  }
+}
+
+.footerWrapper {
+  width: 100vw;
+  margin-top: 40px;
+  background-color: $cardBackground;
+
+  .footer {
+    width: 100%;
+    max-width: 780px;
+    min-width: none;
+    padding: 42px;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+
+
+    .title {
+      font-size: $footerTitleFontSize;
+      font-weight: $footerTitleFontWeight;
+      line-height: $footerTitleFontLineHeight;
+      color: $whiteBlack;
+    }
+
+    .contents {
+      font-size: $buttonFontSize;
+      font-weight: $buttonFontWeight;
+      line-height: $buttonFontLineHeight;
+      color: $whiteGrey;
+    }
+
+    .links {
+      text-align: right;
+
+      a {
+        font-size: $buttonFontSize;
+        font-weight: $buttonFontWeight;
+        line-height: $buttonFontLineHeight;
+        color: $whiteGrey;
+
+        cursor: pointer;
+        text-decoration-line: underline;
+      }
+
+    }
+  }
+}
+
+.sheltersDogButton {
+  margin-bottom: 3px;
+  padding: 2px 12px;
+  border-radius: 6px;
+  border: 0px;
+
+  color: $white;
+  background-color: $iconinactive;
+
+  font-size: $buttonFontSize;
+  font-weight: $buttonFontWeight;
+  line-height: $buttonFontLineHeight;
+
+  &.active {
+    background-color: $main;
+  }
+}
+
+.topNavigationWord {
+  color: $inactive;
+
+  font-size: $heading2MediumFontSize;
+  font-weight: $heading2MediumFontWeight;
+  line-height: $heading2MediumFontLineHeight;
+
+  &.active {
+    color: $main;
+
+    font-size: $heading2BoldFontSize;
+    font-weight: $heading2BoldFontWeight;
+    line-height: $heading2BoldFontLineHeight;
+  }
+}
+
+.filterButtonWrapper {
+  position: relative;
+  display: inline-block;
+  width: 180px;
+
+  @include tabletVertical {
+    width: 48%;
+  }
+
+  @include tablet {
+    width: 48%;
+  }
+
+  @include mobile {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  &.isVisible {
+    z-index: 1001;
+  }
+
+  .filterButton {
+    width: 100%;
+
+    cursor: pointer;
+    text-align: start;
+    box-sizing: border-box;
+
+    padding: 16px 24px;
+    padding-right: 50px;
+
+    border-radius: 4px;
+    border: 1px solid $white;
+    background-color: $cardBackground;
+
+    color: $main;
+
+    font-size: $body1FontSize;
+    font-weight: $body1FontWeight;
+    line-height: $body1FontLineHeight;
+
+    svg {
+      position: absolute;
+      top: 0;
+
+      top: 16px;
+      right: 26px;
+
+      width: 24px;
+      height: 24px;
+
+      g {
+        fill: $transparency;
+      }
+
+      path {
+        stroke: $main;
+      }
+    }
+  }
+
+  ul {
+    display: none;
+    position: absolute;
+    top: 32px;
+    left: 0px;
+
+    padding: 0;
+    border: 0;
+    list-style: none;
+
+    max-height: 200px;
+    overflow: scroll;
+
+    width: 100%;
+
+    li {
+      border: 0px !important;
+    }
+
+    &.active {
+      display: inline-block;
+    }
+  }
+}
+
+.searchInputWrapper {
+  position: relative;
+
+  .searchInput {
+    display: inline-block;
+    padding: 10px 24px;
+    box-sizing: border-box;
+
+    width: 100%;
+    height: inherit;
+
+    border: 0px;
+    border-radius: 6px;
+
+    color: $inactive;
+    background-color: $cardBackground;
+
+    font-size: $body2FontSize;
+    font-weight: $body2FontWeight;
+    line-height: $body2FontLineHeight;
+
+    &:focus {
+      color: $main;
+      outline: 0;
+    }
+  }
+
+  .removeCircle {
+    position: absolute;
+    cursor: pointer;
+
+    width: 22px;
+    height: 22px;
+
+    top: 10px;
+    right: 10px;
+
+    width: 22px;
+    height: 22px;
+
+    g {
+      fill: $inactive;
+    }
+
+    path {
+      stroke: none;
+    }
+  }
+}
+
+.searchBarWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+
+  .searchBar {
+    width: 100%;
+    max-width: 644px;
+
+    display: inline-block;
+  }
+
+  .cancelButton {
+    margin: 0 10px;
+    min-width: 24px;
+
+    cursor: pointer;
+
+    color: $main;
+
+    font-size: $buttonBoldFontSize;
+    font-weight: $buttonBoldFontWeight;
+    line-height: $buttonBoldFontLineHeight;
+
+  }
+}
+
+.bodyOut {
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.volunteerCard {
+  width: 100%;
+  max-width: 780px;
+  min-width: 320px;
+
+  padding: 24px;
+  padding-top: 36px;
+  border-radius: 16px;
+
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  background-color: $cardBackground;
+
+  .shelterName {
+    font-size: $heading2BoldFontSize;
+    font-weight: $heading2BoldFontWeight;
+    line-height: $heading2BoldFontLineHeight;
+
+    color: $main;
+  }
+
+  .info {
+    display: flex;
+    align-items: start;
+
+    font-size: $body2FontSize;
+    font-weight: $body2FontWeight;
+    line-height: $body2FontLineHeight;
+
+    color: $sub;
+
+    @include mobile {
+      display: block;
+    }
+
+    @include tablet {
+      display: block;
+    }
+
+    .volunteerInfo {
+      width: 100%;
+      min-width: 100px;
+      max-width: 250px;
+      display: inline-block;
+
+      @include mobile {
+        margin-bottom: 12px;
+      }
+
+      @include tablet {
+        margin-bottom: 12px;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+
+        span {
+          width: 14px;
+          height: 14px;
+
+          svg {
+            g {
+              fill: none;
+            }
+
+            circle {
+              stroke: $sub;
+            }
+
+            path {
+              stroke: $sub;
+            }
+          }
+
+        }
+      }
+
+    }
+
+    .content {
+      display: inline-block;
+
+    }
+  }
+
+  .detailButton {
+    text-align: right;
+
+    span {
+      cursor: pointer;
+
+      color: $iconinactive;
+      font-size: $body2FontSize;
+      font-weight: $body2FontWeight;
+      line-height: $body2FontLineHeight;
+    }
+
+  }
+}
+
+.pageHeader {
+  display: inline-block;
+
+  .title {
+    color: $main;
+    font-size: $heading1FontSize;
+    font-weight: $heading1FontWeight;
+    line-height: $heading1FontLineHeight;
+  }
+
+  .content {
+    color: $sub;
+    font-size: $body1FontSize;
+    font-weight: $body1FontWeight;
+    line-height: $body1FontLineHeight;
+  }
+
+}

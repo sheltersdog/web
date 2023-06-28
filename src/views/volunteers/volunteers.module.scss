@@ -1,0 +1,11 @@
+@import "../app/constants/colorConstants.scss";
+@import "../app/constants/fontConstants.scss";
+@import "../app/constants/mediaConstants.scss";
+
+.volunteers {
+  .filterButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}

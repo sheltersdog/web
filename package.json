@@ -1,0 +1,61 @@
+{
+  "name": "sheltersdog",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^20.3.1",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.4.0",
+    "classnames": "^2.3.2",
+    "env-cmd": "^10.1.0",
+    "node-sass": "^9.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.13.0",
+    "react-scripts": "5.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.2.3",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "env-cmd -f ./src/.env react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start:development": "env-cmd -f ./src/.env.development react-scripts start",
+    "start:production": "env-cmd -f ./src/.env.production react-scripts start",
+    "build:development": "env-cmd -f ./src/.env.development react-scripts build",
+    "build:production": "env-cmd -f ./src/.env.production react-scripts build",
+    "deploy:production": "aws s3 sync ./build s3://sheltersdog-homepage"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/redux-logger": "^3.0.9"
+  }
+}

@@ -1,0 +1,26 @@
+@import "../app/constants/colorConstants.scss";
+@import "../app/constants/fontConstants.scss";
+@import "../app/constants/mediaConstants.scss";
+
+.serviceIntroduction {
+  display: block;
+  width: 100%;
+  max-width: 780px;
+
+  .contents {
+    .title {
+      color: $main;
+      font-size: $heading1FontSize;
+      font-weight: $heading1FontWeight;
+      line-height: $heading1FontLineHeight;
+    }
+
+    .content {
+      color: $sub;
+      font-size: $body1FontSize;
+      font-weight: $body1FontWeight;
+      line-height: $body1FontLineHeight;
+    }
+  }
+
+}
