@@ -11,25 +11,25 @@ const TopNavigation = () => {
   const [isVisible, setIsVisible] = useState(false)
 
 
-  return <>
+  return <div className={styles.navigationWrapper}>
     <div className={styles.navigation}>
       <span>LOGO</span>
-      <SizedBox width='6.25vw' />
-      <TopNavigationMenu
-        link='/volunteers'
-        content={'모아보기'}
-      />
-      <SizedBox width='4.375vw' />
-      <TopNavigationMenu
-        link='/serviceStory'
-        content={'스토리'}
-      />
-      <SizedBox width='4.375vw' />
-      <TopNavigationMenu
-        link={mail.inquiryLink()}
-        content={'문의하기'}
-      />
-      <SizedBox width='8.6458vw' />
+      <div>
+        <TopNavigationMenu
+          link='/volunteers'
+          content={'모아보기'}
+        />
+        <SizedBox width='4.375vw' />
+        <TopNavigationMenu
+          link='/serviceStory'
+          content={'스토리'}
+        />
+        <SizedBox width='4.375vw' />
+        <TopNavigationMenu
+          link={mail.inquiryLink()}
+          content={'문의하기'}
+        />
+      </div>
       <span onClick={() => setIsVisible(true)} className={styles.search}><Search /></span>
     </div>
     {isVisible ? <>
@@ -45,7 +45,7 @@ const TopNavigation = () => {
       <BodyOut setIsVisible={setIsVisible} color={'rgba(23, 23, 26, 0.50)'} />
     </> : ''
     }
-  </>
+  </div>
 }
 
 export const TopNavigationSizedBox = () => {

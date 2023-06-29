@@ -2,59 +2,64 @@
 @import "../constants/fontConstants.scss";
 @import "../constants/mediaConstants.scss";
 
-.navigation {
+.navigationWrapper {
   position: fixed;
   top: 0;
   width: 100vw;
-
-  display: flex;
   z-index: 1001;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  margin: 0 auto;
 
-  padding: 16px;
-  text-align: center;
+  .navigation {
+    margin: 0 auto;
+    max-width: 780px;
 
-  background-color: $white;
-  box-shadow: 0px 6px 4px -7px $whiteGrey;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  
+    padding: 38px 20px;
+    background-color: $white;
 
-  .search {
-    cursor: pointer;
-
-    width: 24px;
-    height: 24px;
+    .topNavigationWord {
+      cursor: pointer;
+    }
+  
+    .search {
+      cursor: pointer;
+  
+      width: 24px;
+      height: 24px;
+    }
+  
+  }
+  
+  .navigationSearchBar {
+    position: fixed;
+    top: 0;
+    z-index: 1001;
+  
+    background-color: $white;
+    padding: 16px;
+    width: 100vw;
+  }
+  
+  .topNavigationSizedBox {
+    margin-top: 166px;
+  
+    @include tabletVertical {
+      margin-top: 80px;
+    }
+  
+    @include tablet {
+      margin-top: 80px;
+    }
+  
+    @include mobile {
+      margin-top: 80px;
+    }
   }
 
-  .topNavigationWord {
-    cursor: pointer;
-  }
-}
-
-.navigationSearchBar {
-  position: fixed;
-  top: 0;
-  z-index: 1001;
-
-  background-color: $white;
-  padding: 16px;
-  width: 100vw;
-}
-
-.topNavigationSizedBox {
-  margin-top: 166px;
-
-  @include tabletVertical {
-    margin-top: 80px;
-  }
-
-  @include tablet {
-    margin-top: 80px;
-  }
-
-  @include mobile {
-    margin-top: 80px;
-  }
 }
 
 .footerWrapper {
