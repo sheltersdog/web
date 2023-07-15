@@ -18,12 +18,12 @@
       width: 55px;
       height: 41.475px;
     }
-  
+
     @include tablet {
       width: 55px;
       height: 41.475px;
     }
-  
+
     @include mobile {
       width: 42px;
       height: 31.672px;
@@ -38,26 +38,26 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-  
+
     padding: 28px 20px;
 
     .topNavigationWord {
       cursor: pointer;
     }
-  
+
     .search {
       cursor: pointer;
-  
+
       width: 24px;
       height: 24px;
     }
   }
-  
+
   .navigationSearchBar {
     position: fixed;
     top: 0;
     z-index: 1001;
-  
+
     background-color: $white;
     padding: 16px;
     width: 100vw;
@@ -194,12 +194,19 @@
 
     border-radius: 4px;
     border: 1px solid $white;
-    
+
     font-size: $body1FontSize;
     font-weight: $body1FontWeight;
     line-height: $body1FontLineHeight;
 
-    svg {
+    &.list {
+      margin-top: 8px;
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+    }
+
+    .arrowButton {
       position: absolute;
       top: 0;
 
@@ -216,6 +223,12 @@
       path {
         stroke: $main;
       }
+    }
+
+    .filterCheck {
+      width: 18px;
+      height: 10px;
+      color: white;
     }
   }
 
@@ -462,4 +475,10 @@
     line-height: $body1FontLineHeight;
   }
 
+}
+
+.overflowHidden {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

@@ -5,9 +5,9 @@ const APPLICATION_JSON = "application/json"
 const CHARSET = "charset=utf-8"
 
 enum StatusCode {
+  BadRequest = 400,
   Unauthorized = 401,
   Forbidden = 403,
-  BadRequest = 400,
   InternalServerError = 500,
 }
 
