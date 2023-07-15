@@ -4,14 +4,13 @@ import PageHeader from "./components/pageHeader"
 import SearchBar from "./components/searchBar"
 import SearchInput from "./components/searchInput"
 import SheltersDogButton from "./components/sheltersdogButton"
-import TopNavigation, { TopNavigationSizedBox } from "./components/topNavigation"
+import TopNavigation from "./components/topNavigation"
 import TopNavigationMenu from "./components/topNavigationMenu"
 import VolunteerCard from "./components/volunteerCard"
 
 const ComponentView = () => {
   return <div style={{ backgroundColor: '#f0f0f0' }}>
     <TopNavigation />
-    <TopNavigationSizedBox />
     <PageHeader
       title="모아보기"
       content="유기견 봉사를 한눈에 모아볼 수 있어요."

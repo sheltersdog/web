@@ -1,13 +1,12 @@
 import Footer from "../app/components/footer"
 import PageHeader from "../app/components/pageHeader"
 import SizedBox from "../app/components/sizedBox"
-import TopNavigation, { TopNavigationSizedBox } from "../app/components/topNavigation"
+import TopNavigation from "../app/components/topNavigation"
 import styles from './serviceIntroduction.module.scss'
 
 const ServiceIntroduction = () => {
   return <>
     <TopNavigation />
-    <TopNavigationSizedBox />
     <div className={styles.body}>
       <div className={styles.serviceIntroduction}>
         <PageHeader

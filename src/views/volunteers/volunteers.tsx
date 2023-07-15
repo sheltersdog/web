@@ -2,14 +2,13 @@ import FilterButton from "../app/components/filterButton"
 import Footer from "../app/components/footer"
 import PageHeader from "../app/components/pageHeader"
 import SizedBox from "../app/components/sizedBox"
-import TopNavigation, { TopNavigationSizedBox } from "../app/components/topNavigation"
+import TopNavigation from "../app/components/topNavigation"
 import VolunteerCard from "../app/components/volunteerCard"
 import styles from './volunteers.module.scss'
 
 const Volunteers = () => {
   return <>
     <TopNavigation />
-    <TopNavigationSizedBox />
     <div className={styles.body}>
       <div className={styles.volunteers}>
         <PageHeader
@@ -19,7 +18,16 @@ const Volunteers = () => {
         <SizedBox height="76px" />
         <div className={styles.filterButtons}>
           <FilterButton
-            list={["지역"]}
+            list={[
+              "지역지역지역지역지역지역", "지역", "지역", "지역",
+              "지역", "지역", "지역지역지역지역지역지역", "지역",
+              "지역", "지역", "지역", "지역",
+              "지역", "지역", "지역", "지역",
+              "지역", "지역", "지역", "지역",
+              "지역", "지역", "지역", "지역",
+              "지역", "지역", "지역", "지역",
+              "지역", "지역", "지역", "지역",
+            ]}
             onChange={(content: string) => { }}
           />
           <FilterButton

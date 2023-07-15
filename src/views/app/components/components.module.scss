@@ -8,6 +8,27 @@
   width: 100vw;
   z-index: 1001;
   margin: 0 auto;
+  background-color: $white;
+
+  .logo {
+    width: 61px;
+    height: 46px;
+
+    @include tabletVertical {
+      width: 55px;
+      height: 41.475px;
+    }
+  
+    @include tablet {
+      width: 55px;
+      height: 41.475px;
+    }
+  
+    @include mobile {
+      width: 42px;
+      height: 31.672px;
+    }
+  }
 
   .navigation {
     margin: 0 auto;
@@ -18,8 +39,7 @@
     align-items: center;
     justify-content: space-between;
   
-    padding: 38px 20px;
-    background-color: $white;
+    padding: 28px 20px;
 
     .topNavigationWord {
       cursor: pointer;
@@ -31,7 +51,6 @@
       width: 24px;
       height: 24px;
     }
-  
   }
   
   .navigationSearchBar {
@@ -43,28 +62,27 @@
     padding: 16px;
     width: 100vw;
   }
-  
-  .topNavigationSizedBox {
+}
+
+.topNavigationSizedBox {
+  margin-top: 166px;
+
+  @include tabletVertical {
     margin-top: 166px;
-  
-    @include tabletVertical {
-      margin-top: 80px;
-    }
-  
-    @include tablet {
-      margin-top: 80px;
-    }
-  
-    @include mobile {
-      margin-top: 80px;
-    }
   }
 
+  @include tablet {
+    margin-top: 120px;
+  }
+
+  @include mobile {
+    margin-top: 120px;
+  }
 }
 
 .footerWrapper {
   width: 100vw;
-  margin-top: 40px;
+  margin-top: 168px;
   background-color: $cardBackground;
 
   .footer {
@@ -176,10 +194,7 @@
 
     border-radius: 4px;
     border: 1px solid $white;
-    background-color: $cardBackground;
-
-    color: $main;
-
+    
     font-size: $body1FontSize;
     font-weight: $body1FontWeight;
     line-height: $body1FontLineHeight;
@@ -204,6 +219,11 @@
     }
   }
 
+  button {
+    color: $main;
+    background-color: $cardBackground;
+  }
+
   ul {
     display: none;
     position: absolute;
@@ -211,16 +231,21 @@
     left: 0px;
 
     padding: 0;
+    padding-top: 20px;
     border: 0;
+    border-radius: 6px;
     list-style: none;
 
     max-height: 200px;
     overflow: scroll;
 
     width: 100%;
+    background-color: rgba(17, 17, 17, 0.90);
 
     li {
+      color: $white;
       border: 0px !important;
+      padding: 4px 24px !important;
     }
 
     &.active {
