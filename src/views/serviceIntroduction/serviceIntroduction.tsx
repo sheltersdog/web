@@ -18,8 +18,8 @@ const ServiceIntroduction = () => {
           <span className={styles.title}>유반이란?</span>
           <SizedBox height="6px" />
           <span className={styles.content}>
-            유반은 ‘유기견에서 반려견까지’의 줄임말로 유기견에서 반려견이되는 모든 여정을 함께한다는 의미를 가지고 있어요.
-            유반은 이 땅에 모든 강아지들이 행복한 사회를 꿈꾸는 작은 스타트업이에요.
+            유반은 ‘유기견에서 반려견까지’의 줄임말로 유기견에서 반려견이 되는 모든 여정을 함께한다는 의미를 가지고 있어요.
+            유반은 모든 강아지들이 행복한 사회를 꿈꾸는 서비스에요.
           </span>
           <SizedBox height="46px" />
           <span className={styles.title}>유기견 봉사, 좀 더 가까이</span><br />

@@ -1,8 +1,8 @@
-import FilterButton from "./components/filterButton"
 import Footer from "./components/footer"
 import PageHeader from "./components/pageHeader"
 import SearchBar from "./components/searchBar"
 import SearchInput from "./components/searchInput"
+import { SingleSelectButton } from "./components/selectButton"
 import SheltersDogButton from "./components/sheltersdogButton"
 import TopNavigation from "./components/topNavigation"
 import TopNavigationMenu from "./components/topNavigationMenu"
@@ -54,9 +54,10 @@ const ComponentView = () => {
     <br /><br />
     <SheltersDogButton onClick={(e: any) => { }} content={'홍보 봉사'} />
     <br /><br />
-    <FilterButton
+    <SingleSelectButton
       onChange={(value: string) => { console.log(value) }}
       list={['지역', '지역1지역1지역1', '지역2', '지역3', '지역4', '지역5']}
+      selectedIndex={0}
     />
     <br /><br />
     <Footer />

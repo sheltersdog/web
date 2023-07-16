@@ -3,6 +3,11 @@
 @import "../app/constants/mediaConstants.scss";
 
 .volunteers {
+
+  @include pc {
+    width: 780px;
+  }
+  
   .filterButtons {
     display: flex;
     flex-wrap: wrap;

@@ -6,6 +6,7 @@ import { ReactComponent as CheckCircle } from '../../../assets/components/checkC
 import { ReactComponent as Location } from '../../../assets/components/location.svg'
 import React from 'react';
 import SizedBox from './sizedBox';
+import { Link } from 'react-router-dom';
 
 const VolunteerCard = ({ onClick, entity }: VolunteerCardParam) => {
 
@@ -36,7 +37,7 @@ const VolunteerCard = ({ onClick, entity }: VolunteerCardParam) => {
       }} />
       <div className={styles.content}>{entity.content}</div>
     </div>
-    <div className={styles.detailButton}><span>자세히보기</span></div>
+    <div className={styles.detailButton}><Link to={entity.url} target='_blank'><span>자세히보기</span></Link></div>
   </div>
 }
 

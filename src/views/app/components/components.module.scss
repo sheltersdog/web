@@ -160,7 +160,7 @@
   }
 }
 
-.filterButtonWrapper {
+.selectButtonWrapper {
   position: relative;
   display: inline-block;
   width: 180px;
@@ -182,7 +182,7 @@
     z-index: 1001;
   }
 
-  .filterButton {
+  .selectButton {
     width: 100%;
 
     cursor: pointer;
@@ -201,6 +201,7 @@
 
     &.list {
       margin-top: 8px;
+      margin-bottom: 8px;
       display: flex;
       align-content: center;
       justify-content: space-between;
@@ -225,7 +226,7 @@
       }
     }
 
-    .filterCheck {
+    .selectCheck {
       width: 18px;
       height: 10px;
       color: white;
@@ -261,9 +262,15 @@
       padding: 4px 24px !important;
     }
 
-    &.active {
-      display: inline-block;
-    }
+  }
+
+
+  .active {
+    display: inline-block;
+  }
+
+  .disactive {
+    display: none;
   }
 }
 

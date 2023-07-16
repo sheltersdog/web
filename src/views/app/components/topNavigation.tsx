@@ -1,7 +1,10 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ReactComponent as Search } from '../../../assets/components/search.svg'
 import { ReactComponent as Logo } from '../../../assets/logo/Logo.svg'
+import { useAppDispatch } from '../../../redux/app/hooks'
+import { coreStates } from '../../../redux/app/reduxModels'
+import * as coreRedux from '../../../redux/coreRedux'
 import * as mail from '../../../utils/mail'
 import { BodyOut } from './bodyOut'
 import styles from './components.module.scss'
@@ -11,6 +14,9 @@ import TopNavigationMenu from './topNavigationMenu'
 
 const TopNavigation = () => {
   const [isVisible, setIsVisible] = useState(false)
+  const dispatch = useAppDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   return <>
     <div className={styles.navigationWrapper}>
@@ -36,14 +42,17 @@ const TopNavigation = () => {
             content={'문의하기'}
           />
         </div>
-        <span onClick={() => setIsVisible(true)} className={styles.search}><Search /></span>
+        <span onClick={() => {
+          setIsVisible(true)
+          if (location.pathname !== '/volunteers') navigate('/volunteers', { replace: true, })
+        }} className={styles.search}><Search /></span>
       </div>
       {isVisible ? <>
         <div className={styles.navigationSearchBar}>
           <SearchBar
             onChange={(keyword: string) => {
-              console.log(keyword)
               setIsVisible(false)
+              dispatch(coreRedux.changeState({ key: coreStates.keyword, state: keyword }))
             }}
             cancel={() => setIsVisible(false)}
           />

@@ -1,12 +1,153 @@
-import FilterButton from "../app/components/filterButton"
+import { CombinedState } from "@reduxjs/toolkit"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { AddressDto } from "../../dto/address/AddressDto"
+import { AddressType } from "../../dto/address/AddressType"
+import { ReduxState } from "../../dto/reduxState"
+import { useAppDispatch } from "../../redux/app/hooks"
+import * as volunteerRedux from "../../redux/volunteerRedux"
+import { volunteerStates } from "../../redux/volunteerReduxModels"
 import Footer from "../app/components/footer"
 import PageHeader from "../app/components/pageHeader"
+import { CalendarSelectButton, MultiSelectButton, SingleSelectButton } from "../app/components/selectButton"
 import SizedBox from "../app/components/sizedBox"
 import TopNavigation from "../app/components/topNavigation"
 import VolunteerCard from "../app/components/volunteerCard"
 import styles from './volunteers.module.scss'
+import { dateToString } from "../../utils/dateUtil"
+import { VolunteerDto } from "../../dto/volunteer/VolunteerDto"
+import React from "react"
+import * as coreRedux from "../../redux/coreRedux"
+import { coreStates } from "../../redux/app/reduxModels"
 
 const Volunteers = () => {
+  const size = 10
+  const keyword = useSelector((state: CombinedState<any>) => state.coreCall.keyword as string)
+
+  const volunteers = useSelector((state: CombinedState<any>) => state.volunteerCall.volunteers as ReduxState<VolunteerDto[]>)
+  const sidoAddressFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.sidoAddressFilters as ReduxState<AddressDto[]>)
+  const sggAddressFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.sggAddressFilters as ReduxState<AddressDto[]>)
+  const categoryFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.categoryFilters as ReduxState<string[]>)
+
+  const [getVolunteersPayload, setGetVolunteersPayload] = useState({} as GetVolunteersPayload)
+  const [sidoIndex, setSidoIndex] = useState(0)
+  const [sggIndex, setSggIndex] = useState(0)
+  const [categoryIndexes, setCategoryIndexes] = useState([] as number[])
+  const [selectedDate, setSelectedDate]: [undefined | Date, React.Dispatch<React.SetStateAction<undefined | Date>>] = useState()
+  const [volunteerList, setVolunteerList] = useState([] as VolunteerDto[])
+
+  const setDate = (date: Date) => {
+    setSelectedDate(date)
+    setGetVolunteersPayload({
+      page: 0,
+      size,
+      regionCode: getVolunteersPayload.regionCode,
+      date: dateToString(date),
+      categories: getVolunteersPayload.categories,
+      keyword: getVolunteersPayload.keyword,
+    })
+  }
+
+  const setCategoryIndexesWrapper = (index: number) => {
+    const copyCategoryIndexes =
+      (categoryIndexes.length === 0)
+        ? [index]
+        : (categoryIndexes.includes(index))
+          ? categoryIndexes.filter((i: number) => index !== i)
+          : [index].concat(categoryIndexes)
+
+    setCategoryIndexes(copyCategoryIndexes)
+    setGetVolunteersPayload({
+      page: 0,
+      size,
+      regionCode: getVolunteersPayload.regionCode,
+      date: getVolunteersPayload.date,
+      categories: copyCategoryIndexes.map((index: number) => categoryFilters.data?.at(index) as string),
+      keyword: getVolunteersPayload.keyword,
+    })
+  }
+
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(volunteerRedux.getAddresses({ key: volunteerStates.sidoAddressFilters, payload: { type: AddressType.SIDO, parentCode: '', keyword: '', } }))
+  }, [dispatch])
+
+  useEffect(() => {
+    setSggIndex(0)
+    if (sidoIndex === 0) {
+      dispatch(volunteerRedux.reset({ key: volunteerStates.sggAddressFilters }))
+      return
+    }
+
+    const parentCode = sidoAddressFilters.data?.at(sidoIndex - 1)?.code
+    dispatch(volunteerRedux.getAddresses({ key: volunteerStates.sggAddressFilters, payload: { type: AddressType.SGG, parentCode, keyword: '' } }))
+  }, [dispatch, sidoIndex, sidoAddressFilters.data])
+
+  useEffect(() => {
+    const regionCode =
+      sggIndex === 0
+        ? (
+          sidoIndex === 0
+            ? 0
+            : (sidoAddressFilters.data?.at(sidoIndex - 1)?.regionCode) ?? getVolunteersPayload.regionCode
+        )
+        : (sggAddressFilters.data?.at(sggIndex - 1)?.regionCode) ?? getVolunteersPayload.regionCode
+
+    setGetVolunteersPayload({
+      page: 0,
+      size,
+      regionCode,
+      date: getVolunteersPayload.date,
+      categories: getVolunteersPayload.categories,
+      keyword: getVolunteersPayload.keyword,
+    })
+
+    dispatch(volunteerRedux.getFilterCategories({
+      payload: {
+        regionCode, date: getVolunteersPayload.date
+      }
+    }))
+  }, [dispatch, sggIndex, sggAddressFilters.data])
+
+  useEffect(() => {
+    setCategoryIndexes([] as number[])
+  }, [categoryFilters])
+
+  useEffect(() => {
+    dispatch(volunteerRedux.getVolunteers({ payload: getVolunteersPayload }))
+    dispatch(coreRedux.changeState({ key: coreStates.keyword, state: keyword }))
+  }, [dispatch, getVolunteersPayload])
+
+  useEffect(() => {
+    if (!keyword || keyword.trim() === '') return
+    if (getVolunteersPayload.keyword && keyword.trim() === getVolunteersPayload.keyword.trim()) return
+
+    setGetVolunteersPayload({
+      page: 0,
+      size,
+      regionCode: getVolunteersPayload.regionCode,
+      date: getVolunteersPayload.date,
+      categories: getVolunteersPayload.categories,
+      keyword: keyword,
+    })
+    dispatch(coreRedux.changeState({ key: coreStates.keyword, state: '' }))
+  }, [keyword])
+
+  useEffect(() => {
+    if (!volunteers.data) return
+
+    if (getVolunteersPayload.page === 0) {
+      setVolunteerList(volunteers.data)
+    } else if (volunteerList.at(volunteerList.length - 1)?.id === volunteers.data.at(volunteers.data.length - 1)?.id) {
+      /* do nothing */
+    } else {
+      setVolunteerList(volunteerList.concat(volunteers.data))
+    }
+  }, [volunteers])
+
+  useEffect(() => {
+  }, [volunteerList])
+
   return <>
     <TopNavigation />
     <div className={styles.body}>
@@ -17,113 +158,64 @@ const Volunteers = () => {
         />
         <SizedBox height="76px" />
         <div className={styles.filterButtons}>
-          <FilterButton
-            list={[
-              "지역지역지역지역지역지역", "지역", "지역", "지역",
-              "지역", "지역", "지역지역지역지역지역지역", "지역",
-              "지역", "지역", "지역", "지역",
-              "지역", "지역", "지역", "지역",
-              "지역", "지역", "지역", "지역",
-              "지역", "지역", "지역", "지역",
-              "지역", "지역", "지역", "지역",
-              "지역", "지역", "지역", "지역",
-            ]}
-            onChange={(content: string) => { }}
+          <SingleSelectButton list={
+            sidoAddressFilters.data ?
+              ['지역'].concat(sidoAddressFilters.data.map((e: AddressDto) => e.name))
+              : ['지역']
+          }
+            selectedIndex={sidoIndex}
+            onChange={setSidoIndex}
           />
-          <FilterButton
-            list={["동네"]}
-            onChange={(content: string) => { }}
+          <SingleSelectButton list={
+            sggAddressFilters.data ?
+              ['동네'].concat(sggAddressFilters.data.map((e: AddressDto) => e.name))
+              : ['동네']
+          }
+            selectedIndex={sggIndex}
+            onChange={setSggIndex}
           />
-          <FilterButton
-            list={["기간"]}
-            onChange={(content: string) => { }}
-          />
-          <FilterButton
-            list={["카테고리"]}
-            onChange={(content: string) => { }}
+          <CalendarSelectButton
+            onChange={setDate}
+            title={
+              selectedDate === undefined
+                ? '날짜'
+                : dateToString(selectedDate)
+            }
+            selectedDate={selectedDate ?? new Date()} />
+          <MultiSelectButton
+            list={categoryFilters.data ? categoryFilters.data : []}
+            onChange={setCategoryIndexesWrapper}
+            title="카테고리"
+            selectedIndexes={categoryIndexes}
           />
         </div>
         <SizedBox height="32px" />
         <div>
-          <VolunteerCard
-            onClick={() => { }}
-            entity={{
-              term: '단기',
-              types: ['홍보 봉사', '놀이 봉사', '청소 봉사', '목욕 봉사'],
-              location: '경기도',
-              duration: '23년 7월 1일 ~ 23년 7월 31일',
-              day: '월요일, 수요일, 금요일',
-              time: '오후 1:30 ~ 4:30',
-              content: '아이들과 만나서 산책과 함께 성향을 알아보고, 사진을 찍어 블로그에 아이들 프로필을 올려주세요.',
-              shelter: {
-                name: '경기도 반려동물 입양센터'
-              }
-            }}
-          />
-          <SizedBox height="24px" />
-          <VolunteerCard
-            onClick={() => { }}
-            entity={{
-              term: '단기',
-              types: ['홍보 봉사', '놀이 봉사', '청소 봉사', '목욕 봉사'],
-              location: '경기도',
-              duration: '23년 7월 1일 ~ 23년 7월 31일',
-              day: '월요일, 수요일, 금요일',
-              time: '오후 1:30 ~ 4:30',
-              content: '아이들과 만나서 산책과 함께 성향을 알아보고, 사진을 찍어 블로그에 아이들 프로필을 올려주세요.',
-              shelter: {
-                name: '경기도 반려동물 입양센터'
-              }
-            }}
-          />
-          <SizedBox height="24px" />
-          <VolunteerCard
-            onClick={() => { }}
-            entity={{
-              term: '단기',
-              types: ['홍보 봉사', '놀이 봉사', '청소 봉사', '목욕 봉사'],
-              location: '경기도',
-              duration: '23년 7월 1일 ~ 23년 7월 31일',
-              day: '월요일, 수요일, 금요일',
-              time: '오후 1:30 ~ 4:30',
-              content: '아이들과 만나서 산책과 함께 성향을 알아보고, 사진을 찍어 블로그에 아이들 프로필을 올려주세요.',
-              shelter: {
-                name: '경기도 반려동물 입양센터'
-              }
-            }}
-          />
-          <SizedBox height="24px" />
-          <VolunteerCard
-            onClick={() => { }}
-            entity={{
-              term: '단기',
-              types: ['홍보 봉사', '놀이 봉사', '청소 봉사', '목욕 봉사'],
-              location: '경기도',
-              duration: '23년 7월 1일 ~ 23년 7월 31일',
-              day: '월요일, 수요일, 금요일',
-              time: '오후 1:30 ~ 4:30',
-              content: '아이들과 만나서 산책과 함께 성향을 알아보고, 사진을 찍어 블로그에 아이들 프로필을 올려주세요.',
-              shelter: {
-                name: '경기도 반려동물 입양센터'
-              }
-            }}
-          />
-          <SizedBox height="24px" />
-          <VolunteerCard
-            onClick={() => { }}
-            entity={{
-              term: '단기',
-              types: ['홍보 봉사', '놀이 봉사', '청소 봉사', '목욕 봉사'],
-              location: '경기도',
-              duration: '23년 7월 1일 ~ 23년 7월 31일',
-              day: '월요일, 수요일, 금요일',
-              time: '오후 1:30 ~ 4:30',
-              content: '아이들과 만나서 산책과 함께 성향을 알아보고, 사진을 찍어 블로그에 아이들 프로필을 올려주세요.',
-              shelter: {
-                name: '경기도 반려동물 입양센터'
-              }
-            }}
-          />
+          {
+            volunteerList ?
+              volunteerList.map((volunteerDto: VolunteerDto, index: number) =>
+                <React.Fragment key={index}>
+                  <VolunteerCard
+                    onClick={() => { }}
+                    entity={{
+                      term: volunteerDto.isShort ? '단기' : '장기',
+                      types: volunteerDto.categories,
+                      location: volunteerDto.address?.regionName,
+                      duration: `${volunteerDto.startDate} ~ ${volunteerDto.endDate}`,
+                      day: volunteerDto.day,
+                      time: volunteerDto.time,
+                      content: volunteerDto.content,
+                      shelter: {
+                        name: volunteerDto.shelterName
+                      },
+                      url: volunteerDto.url,
+                    }}
+                  />
+                  <SizedBox height="24px" />
+                </React.Fragment>
+              )
+              : ''
+          }
         </div>
 
       </div>
@@ -132,6 +224,15 @@ const Volunteers = () => {
     </div>
     <Footer />
   </>
+}
+
+class GetVolunteersPayload {
+  readonly page: number = 0
+  readonly size: number = 10
+  readonly keyword: string = ''
+  readonly regionCode!: number
+  readonly date!: string
+  readonly categories!: string[]
 }
 
 export default Volunteers
