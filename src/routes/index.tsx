@@ -5,8 +5,12 @@ import ServiceIntroduction from "../views/serviceIntroduction/serviceIntroductio
 import Volunteers from "../views/volunteers/volunteers";
 
 export const router = createBrowserRouter([
-  {path: '/', element: <App />},
-  {path: '/components', element: <ComponentView />},
-  {path: '/volunteers', element: <Volunteers />},
-  {path: '/serviceStory', element: <ServiceIntroduction />},
+  {
+    path: '/', element: <App />,
+    children: [
+      { path: 'volunteers', element: <Volunteers /> },
+      { path: 'serviceStory', element: <ServiceIntroduction /> },
+    ]
+  },
+  { path: '/components', element: <ComponentView /> },
 ])

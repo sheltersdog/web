@@ -7,11 +7,9 @@ import { ReduxState } from "../../dto/reduxState"
 import { useAppDispatch } from "../../redux/app/hooks"
 import * as volunteerRedux from "../../redux/volunteerRedux"
 import { volunteerStates } from "../../redux/volunteerReduxModels"
-import Footer from "../app/components/footer"
 import PageHeader from "../app/components/pageHeader"
 import { CalendarSelectButton, MultiSelectButton, SingleSelectButton } from "../app/components/selectButton"
 import SizedBox from "../app/components/sizedBox"
-import TopNavigation from "../app/components/topNavigation"
 import VolunteerCard from "../app/components/volunteerCard"
 import styles from './volunteers.module.scss'
 import { dateToString } from "../../utils/dateUtil"
@@ -149,7 +147,6 @@ const Volunteers = () => {
   }, [volunteerList])
 
   return <>
-    <TopNavigation />
     <div className={styles.body}>
       <div className={styles.volunteers}>
         <PageHeader
@@ -222,7 +219,6 @@ const Volunteers = () => {
 
 
     </div>
-    <Footer />
   </>
 }
 

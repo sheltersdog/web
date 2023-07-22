@@ -2,7 +2,7 @@ import Footer from "./components/footer"
 import PageHeader from "./components/pageHeader"
 import SearchBar from "./components/searchBar"
 import SearchInput from "./components/searchInput"
-import { SingleSelectButton } from "./components/selectButton"
+import { MultiSelectButton, SingleSelectButton } from "./components/selectButton"
 import SheltersDogButton from "./components/sheltersdogButton"
 import TopNavigation from "./components/topNavigation"
 import TopNavigationMenu from "./components/topNavigationMenu"
@@ -14,8 +14,7 @@ const ComponentView = () => {
     <PageHeader
       title="모아보기"
       content="유기견 봉사를 한눈에 모아볼 수 있어요."
-    />
-    <br /><br />
+    />&nbsp;&nbsp;
     <VolunteerCard
       onClick={() => { }}
       entity={{
@@ -30,36 +29,33 @@ const ComponentView = () => {
           name: '경기도 반려동물 입양센터'
         }
       }}
-    />
-    <br /><br />
+    />&nbsp;&nbsp;
     <SearchBar
       onChange={(e: any) => { }}
       cancel={(e: any) => { }}
-    />
-    <br /><br />
+    />&nbsp;&nbsp;
     <SearchInput
       onChange={(e: any) => { }}
-      placeHolder='어떤 봉사를 찾으시나요?' />
-    <br /><br />
+      placeHolder='어떤 봉사를 찾으시나요?' />&nbsp;&nbsp;
     <TopNavigationMenu
       link='/volunteers'
-      content={'네비게이션'} />
-    <br /><br />
+      content={'네비게이션'} />&nbsp;&nbsp;
     <TopNavigationMenu
       link='/serviceStory'
       content={'네비게이션'} isActive
-    />
-    <br /><br />
-    <SheltersDogButton onClick={(e: any) => { }} content={'단기'} isActive />
-    <br /><br />
-    <SheltersDogButton onClick={(e: any) => { }} content={'홍보 봉사'} />
-    <br /><br />
+    />&nbsp;&nbsp;
+    <SheltersDogButton onClick={(e: any) => { }} content={'단기'} isActive />&nbsp;&nbsp;
+    <SheltersDogButton onClick={(e: any) => { }} content={'홍보 봉사'} />&nbsp;&nbsp;
     <SingleSelectButton
       onChange={(value: string) => { console.log(value) }}
       list={['지역', '지역1지역1지역1', '지역2', '지역3', '지역4', '지역5']}
       selectedIndex={0}
-    />
-    <br /><br />
+    />&nbsp;&nbsp;
+    <MultiSelectButton
+      title={'필터'}
+      list={['필터1', '필터2', '필터3', '필터4', '필터5', '필터6']}
+      onChange={() => { }}
+      selectedIndexes={[0, 1]} />&nbsp;&nbsp;
     <Footer />
   </div>
 }
