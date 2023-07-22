@@ -41,12 +41,24 @@
 
     padding: 28px 20px;
 
+    &.admin {
+      max-width: 946px;
+    }
+
     .topNavigationWord {
       cursor: pointer;
     }
 
     .search {
       cursor: pointer;
+
+      width: 24px;
+      height: 24px;
+    }
+
+    .userProfile {
+      cursor: pointer;
+      margin-left: 58px;
 
       width: 24px;
       height: 24px;

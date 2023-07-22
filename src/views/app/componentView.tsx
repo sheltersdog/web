@@ -11,6 +11,7 @@ import VolunteerCard from "./components/volunteerCard"
 const ComponentView = () => {
   return <div style={{ backgroundColor: '#f0f0f0' }}>
     <TopNavigation />
+    <TopNavigation isAdmin/>
     <PageHeader
       title="모아보기"
       content="유기견 봉사를 한눈에 모아볼 수 있어요."
