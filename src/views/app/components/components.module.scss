@@ -1,6 +1,4 @@
-@import "../constants/colorConstants.scss";
-@import "../constants/fontConstants.scss";
-@import "../constants/mediaConstants.scss";
+@import "../constants/constants.scss";
 
 .navigationWrapper {
   position: fixed;
@@ -138,7 +136,46 @@
   }
 }
 
-.sheltersDogButton {
+.sheltersdogButton {
+  padding: 15px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 6px;
+
+  font-size: $ctaSbdFontSize;
+  font-weight: $ctaSbdFontWeight;
+  line-height: $ctaSbdFontLineHeight;
+
+  
+  &.big {
+    width: 600px;
+  }
+
+  &.medium {
+    width: 300px;
+  }
+
+  &.active {
+    color: white;
+    background-color: $primary;
+  }
+
+  &.inactive {
+    color: white;
+    background-color: $buttonInactive;
+  }
+
+  &.disemphasis {
+    color: $inactive;
+  }
+
+
+
+
+
+}
+
+.sheltersDogTag {
   margin-bottom: 3px;
   padding: 2px 12px;
   border-radius: 6px;

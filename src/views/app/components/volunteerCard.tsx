@@ -1,5 +1,5 @@
 import styles from './components.module.scss';
-import SheltersDogButton from './sheltersdogButton';
+import SheltersDogTag from './sheltersdogTag';
 import { ReactComponent as Alarm } from '../../../assets/components/alarm.svg'
 import { ReactComponent as Calender } from '../../../assets/components/calendar.svg'
 import { ReactComponent as CheckCircle } from '../../../assets/components/checkCircle.svg'
@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 const VolunteerCard = ({ onClick, entity }: VolunteerCardParam) => {
 
   return <div className={styles.volunteerCard}>
-    <SheltersDogButton onClick={() => { }} content={entity.term} isActive />
+    <SheltersDogTag onClick={() => { }} content={entity.term} isActive />
     {entity.types.map((content: string, index: number) =>
       <React.Fragment key={index}>
         <SizedBox width='3px' height='3px'/>
-        <SheltersDogButton onClick={() => { }} content={content} />
+        <SheltersDogTag onClick={() => { }} content={content} />
       </React.Fragment>
     )}
     <SizedBox height='6px' />

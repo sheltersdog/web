@@ -1,0 +1,102 @@
+// color
+
+$transparency: rgba(0, 0, 0, 0);
+
+$white: #FFFFFF;
+$whiteGrey: #BDBDBD;
+
+$whiteBlack: #4F4F4F;
+
+$main: #191F28;
+$sub: #6B7684;
+
+$inactive: #8B95A1;
+$buttonInactive: #CDD2D7;
+
+$iconinactive: #B1B8C0;
+$cardBackground: #FAFAFB;
+
+$primary: #FFAE34;
+
+
+// font
+$fontLineHeight: 150%;
+
+$heading1FontSize: 24px;
+$heading1FontWeight: 700;
+$heading1FontLineHeight: 34px;
+
+$heading2BoldFontSize: 18px;
+$heading2BoldFontWeight: 700;
+$heading2BoldFontLineHeight: 28px;
+
+$heading2MediumFontSize: 18px;
+$heading2MediumFontWeight: 500;
+$heading2MediumFontLineHeight: 28px;
+
+$body1FontSize: 16px;
+$body1FontWeight: 500;
+$body1FontLineHeight: 26px;
+
+$body2FontSize: 14px;
+$body2FontWeight: 500;
+$body2FontLineHeight: 24px;
+
+$buttonBoldFontSize: 12px;
+$buttonBoldFontWeight: 700;
+$buttonBoldFontLineHeight: 22px;
+
+$buttonFontSize: 12px;
+$buttonFontWeight: 500;
+$buttonFontLineHeight: 22px;
+
+$footerTitleFontSize: 14px;
+$footerTitleFontWeight: 700;
+$footerTitleFontLineHeight: 22px;
+
+$ctaSbdFontSize: 15px;
+$ctaSbdFontWeight: 600;
+$ctaSbdFontLineHeight: 100%;
+
+// media
+@mixin mobile {
+  @media (max-width: 479px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 480px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tabletVertical {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin pc {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+a {
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+}
