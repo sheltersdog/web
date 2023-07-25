@@ -1,25 +1,25 @@
 import { CombinedState } from "@reduxjs/toolkit"
-import { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
+import InfiniteScroll from 'react-infinite-scroller'
 import { useSelector } from "react-redux"
 import { AddressDto } from "../../dto/address/AddressDto"
 import { AddressType } from "../../dto/address/AddressType"
 import { ReduxState } from "../../dto/reduxState"
+import { VolunteerDto } from "../../dto/volunteer/VolunteerDto"
 import { useAppDispatch } from "../../redux/app/hooks"
+import { coreStates } from "../../redux/app/reduxModels"
+import * as coreRedux from "../../redux/coreRedux"
 import * as volunteerRedux from "../../redux/volunteerRedux"
 import { volunteerStates } from "../../redux/volunteerReduxModels"
+import { dateToString } from "../../utils/dateUtil"
 import PageHeader from "../app/components/pageHeader"
 import { CalendarSelectButton, MultiSelectButton, SingleSelectButton } from "../app/components/selectButton"
 import SizedBox from "../app/components/sizedBox"
 import VolunteerCard from "../app/components/volunteerCard"
 import styles from './volunteers.module.scss'
-import { dateToString } from "../../utils/dateUtil"
-import { VolunteerDto } from "../../dto/volunteer/VolunteerDto"
-import React from "react"
-import * as coreRedux from "../../redux/coreRedux"
-import { coreStates } from "../../redux/app/reduxModels"
 
+const size = 10
 const Volunteers = () => {
-  const size = 10
   const keyword = useSelector((state: CombinedState<any>) => state.coreCall.keyword as string)
 
   const volunteers = useSelector((state: CombinedState<any>) => state.volunteerCall.volunteers as ReduxState<VolunteerDto[]>)
@@ -27,12 +27,34 @@ const Volunteers = () => {
   const sggAddressFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.sggAddressFilters as ReduxState<AddressDto[]>)
   const categoryFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.categoryFilters as ReduxState<string[]>)
 
-  const [getVolunteersPayload, setGetVolunteersPayload] = useState({} as GetVolunteersPayload)
+  const [getVolunteersPayload, setGetVolunteersPayload] = useState({
+    page: 0,
+    size: size,
+    keyword: '',
+    regionCode: 0,
+    date: '',
+    categories: ['']
+  })
   const [sidoIndex, setSidoIndex] = useState(0)
   const [sggIndex, setSggIndex] = useState(0)
   const [categoryIndexes, setCategoryIndexes] = useState([] as number[])
   const [selectedDate, setSelectedDate]: [undefined | Date, React.Dispatch<React.SetStateAction<undefined | Date>>] = useState()
   const [volunteerList, setVolunteerList] = useState([] as VolunteerDto[])
+
+  const [hasMore, setHasMore] = useState(false)
+
+  const loadMore = (page: number) => {
+    setHasMore(false)
+    if (!volunteers.data || volunteers.data?.length === 0) return
+    setGetVolunteersPayload({
+      page: getVolunteersPayload.page + 1,
+      size,
+      regionCode: getVolunteersPayload.regionCode,
+      date: getVolunteersPayload.date,
+      categories: getVolunteersPayload.categories,
+      keyword: getVolunteersPayload.keyword,
+    })
+  }
 
   const setDate = (date: Date) => {
     setSelectedDate(date)
@@ -112,6 +134,7 @@ const Volunteers = () => {
   }, [categoryFilters])
 
   useEffect(() => {
+    console.log(getVolunteersPayload)
     dispatch(volunteerRedux.getVolunteers({ payload: getVolunteersPayload }))
     dispatch(coreRedux.changeState({ key: coreStates.keyword, state: keyword }))
   }, [dispatch, getVolunteersPayload])
@@ -131,17 +154,23 @@ const Volunteers = () => {
     dispatch(coreRedux.changeState({ key: coreStates.keyword, state: '' }))
   }, [keyword])
 
-  useEffect(() => {
-    if (!volunteers.data) return
+  const viewVolunteers = useMemo(() => {
+    if (!volunteers.data) {
+      setHasMore(false)
+      return
+    }
 
     if (getVolunteersPayload.page === 0) {
       setVolunteerList(volunteers.data)
+      setHasMore(true)
     } else if (volunteerList.at(volunteerList.length - 1)?.id === volunteers.data.at(volunteers.data.length - 1)?.id) {
-      /* do nothing */
+      setHasMore(false)
     } else {
       setVolunteerList(volunteerList.concat(volunteers.data))
+      setHasMore(true)
     }
   }, [volunteers])
+  useEffect(() => viewVolunteers, [volunteers])
 
   useEffect(() => {
   }, [volunteerList])
@@ -188,43 +217,46 @@ const Volunteers = () => {
         </div>
         <SizedBox height="32px" />
         <div>
-          {
-            volunteerList ?
-              volunteerList.map((volunteerDto: VolunteerDto, index: number) =>
-                <React.Fragment key={index}>
-                  <VolunteerCard
-                    onClick={() => { }}
-                    entity={{
-                      term: volunteerDto.isShort ? '단기' : '장기',
-                      types: volunteerDto.categories,
-                      location: volunteerDto.address?.regionName,
-                      duration: `${volunteerDto.startDate} ~ ${volunteerDto.endDate}`,
-                      day: volunteerDto.day,
-                      time: volunteerDto.time,
-                      content: volunteerDto.content,
-                      shelter: {
-                        name: volunteerDto.shelterName
-                      },
-                      url: volunteerDto.url,
-                    }}
-                  />
-                  <SizedBox height="24px" />
-                </React.Fragment>
-              )
-              : ''
-          }
+          <InfiniteScroll
+            loadMore={loadMore}
+            hasMore={hasMore}
+            loader={<div className="loader" key={0}>Loading ...</div>}
+          >
+            {
+              volunteerList ?
+                volunteerList.map((volunteerDto: VolunteerDto, index: number) =>
+                  <React.Fragment key={index}>
+                    <VolunteerCard
+                      onClick={() => { }}
+                      entity={{
+                        term: volunteerDto.isShort ? '단기' : '장기',
+                        types: volunteerDto.categories,
+                        location: volunteerDto.address?.regionName,
+                        duration: `${volunteerDto.startDate} ~ ${volunteerDto.endDate}`,
+                        day: volunteerDto.day,
+                        time: volunteerDto.time,
+                        content: volunteerDto.content,
+                        shelter: {
+                          name: volunteerDto.shelterName
+                        },
+                        url: volunteerDto.url,
+                      }}
+                    />
+                    <SizedBox height="24px" />
+                  </React.Fragment>
+                )
+                : ''
+            }
+          </InfiniteScroll>
         </div>
-
       </div>
-
-
     </div>
   </>
 }
 
 class GetVolunteersPayload {
   readonly page: number = 0
-  readonly size: number = 10
+  readonly size: number = size
   readonly keyword: string = ''
   readonly regionCode!: number
   readonly date!: string
