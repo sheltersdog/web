@@ -23,7 +23,9 @@ const Volunteers = () => {
   const keyword = useSelector((state: CombinedState<any>) => state.coreCall.keyword as string)
 
   const volunteers = useSelector((state: CombinedState<any>) => state.volunteerCall.volunteers as ReduxState<VolunteerDto[]>)
-  const sidoAddressFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.sidoAddressFilters as ReduxState<AddressDto[]>)
+  const sidoAddressFilters = useSelector(
+    (state: CombinedState<any>) => state.volunteerCall.sidoAddressFilters as ReduxState<AddressDto[]>
+  )
   const sggAddressFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.sggAddressFilters as ReduxState<AddressDto[]>)
   const categoryFilters = useSelector((state: CombinedState<any>) => state.volunteerCall.categoryFilters as ReduxState<string[]>)
 
