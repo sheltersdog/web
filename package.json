@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "@storybook/cli": "^7.3.2",
+    "@storybook/react": "^7.3.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -15,6 +17,7 @@
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
     "env-cmd": "^10.1.0",
+    "init": "^0.1.2",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-calendar": "^4.3.0",
@@ -38,12 +41,15 @@
     "start:production": "env-cmd -f ./src/.env.production react-scripts start",
     "build:development": "env-cmd -f ./src/.env.development react-scripts build",
     "build:production": "env-cmd -f ./src/.env.production react-scripts build",
-    "deploy:production": "aws s3 sync ./build s3://sheltersdog-homepage"
+    "deploy:production": "aws s3 sync ./build s3://sheltersdog-homepage",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -59,7 +65,19 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.3.2",
+    "@storybook/addon-interactions": "^7.3.2",
+    "@storybook/addon-links": "^7.3.2",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.3.2",
+    "@storybook/preset-create-react-app": "^7.3.2",
+    "@storybook/react-webpack5": "^7.3.2",
+    "@storybook/testing-library": "^0.2.0",
     "@types/react-infinite-scroller": "^1.2.3",
-    "@types/redux-logger": "^3.0.9"
+    "@types/redux-logger": "^3.0.9",
+    "babel-plugin-named-exports-order": "^0.0.2",
+    "eslint-plugin-storybook": "^0.6.13",
+    "prop-types": "^15.8.1",
+    "webpack": "^5.88.2"
   }
 }
